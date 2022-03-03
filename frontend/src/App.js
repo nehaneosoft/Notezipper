@@ -1,7 +1,19 @@
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import LandingPage from "./components/screens/LandingPage/LandingPage";
+
+
 function App() {
   return (
     <>
-    <h1>NoteZipper App</h1>
+    
+    <Header />
+    <main>
+      <LandingPage />
+    </main>
+
+    <Footer />
+   
      
     </>
   );
