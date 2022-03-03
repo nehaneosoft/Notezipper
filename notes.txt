@@ -1,0 +1,3 @@
+What is the use of npm init ? 
+   Ans : It initializes our directory so that we can start developing our node js applications. It creates a file called package.json which will store all our npm packages.
+    -> npm means node package manager and it comes bundled with node js.
