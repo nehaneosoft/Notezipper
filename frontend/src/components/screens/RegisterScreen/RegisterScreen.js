@@ -64,13 +64,14 @@ const RegisterScreen = () => {
       data.append('upload_preset','notezipper')
       data.append('cloud_name','dv3ivknsc');
       fetch("https://api.cloudinary.com/v1_1/dv3ivknsc/image/upload",{
-        method: "post",
+        method: "POST",
         body: data,
       })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
         setPic(data.url.toString());
+        //console.log(pic)
       })
       .catch((err) => {
         console.log(err);
@@ -138,6 +139,7 @@ const RegisterScreen = () => {
               onChange={(e) => postDetails(e.target.files[0])}
               type="file"
               size="sm"
+              custom
             />
           </Form.Group>
 
