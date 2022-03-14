@@ -1,9 +1,20 @@
 import React from 'react';
 import { Navbar, Nav, NavDropdown, Form, Button, FormControl, Container } from 'react-bootstrap';
-import { Link ,history, useHistory} from 'react-router-dom';
+import { Link , useHistory} from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {logout} from "../actions/userActions";
 
 const Header = () => {
     const history= useHistory();
+    const dispatch = useDispatch();
+
+    const userLogin =useSelector((state) => state.userLogin);
+
+    const {userInfo} =userLogin;
+    const logoutHandler = () => {
+        dispatch(logout());
+        history.push("/");
+    }
     return (
         <>
             <Navbar bg="dark" expand="lg" variant='dark'>
@@ -34,10 +45,7 @@ const Header = () => {
                                 <NavDropdown.Item href="#action/3.1">My Profile</NavDropdown.Item>
                                 <NavDropdown.Divider />
 
-                                <NavDropdown.Item onClick={()=>{
-                                    localStorage.removeItem("userInfo");
-                                    history.push("/")
-                                }}>Logout</NavDropdown.Item>
+                                <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                        
