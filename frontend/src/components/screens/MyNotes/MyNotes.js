@@ -4,28 +4,29 @@ import { Link } from 'react-router-dom';
 import MainScreen from '../../MainScreen';
 //import notes from "../../../data/notes";
 import axios from "axios";
+import { useDispatch,useSelector} from "react-redux";
+import { listNotes } from '../../../actions/notesActions';
+import Loading from "../../Loading";
+import ErrorMessage from "../../ErrorMessage";
 
 const MyNotes = () => {
+    const dispatch = useDispatch();
 
-    const [notes, setNotes] = useState([]);
+    const noteList = useSelector((state) => state.noteList);
+    const {loading, notes, error } =noteList;
 
+    
     const deleteHandler = (id) => {
         if (window.confirm("Are you sure ?")) {
 
         }
     };
 
-    const fetchNotes = async () =>{
-        const {data} = await axios.get('/api/notes');
-        // console.log(data);
-        setNotes(data);
-    }
-    console.log(notes);
-
     useEffect(()=>{
-        fetchNotes();
+        dispatch(listNotes());
 
-    },[])
+    },[dispatch])
+
     return (
         <MainScreen title="Welcome Back Neha Kumari..">
             <Link to="createnote">
@@ -33,9 +34,10 @@ const MyNotes = () => {
                     Create New Note
                 </Button>
             </Link>
-
-            {
-                notes.map(note => (
+            
+               {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+               {loading && <Loading />}
+               { notes?.map(note => (
                     <Accordion className='accordian-flush' key={note._id}>
                     <Card style={{ margin: 10 }}>
                         <Card.Header style={{ display: "flex" }}>
@@ -79,8 +81,8 @@ const MyNotes = () => {
                     </Accordion>
 
                 ))
-
-            }
+    }
+            
 
 
 
@@ -88,4 +90,4 @@ const MyNotes = () => {
     )
 }
 
-export default MyNotes
+export default MyNotes;
