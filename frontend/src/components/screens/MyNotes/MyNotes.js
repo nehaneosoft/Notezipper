@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Card,Badge, Accordion } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link , useHistory } from 'react-router-dom';
 import MainScreen from '../../MainScreen';
 //import notes from "../../../data/notes";
 import axios from "axios";
@@ -15,6 +15,9 @@ const MyNotes = () => {
     const noteList = useSelector((state) => state.noteList);
     const {loading, notes, error } =noteList;
 
+    const userLogin = useSelector((state) => state.userLogin);
+    const {userInfo } = userLogin;
+
     
     const deleteHandler = (id) => {
         if (window.confirm("Are you sure ?")) {
@@ -22,13 +25,18 @@ const MyNotes = () => {
         }
     };
 
+    const history = useHistory();
+
     useEffect(()=>{
         dispatch(listNotes());
+        if(!userInfo){
+            history.push("/")
+        }
 
     },[dispatch])
 
     return (
-        <MainScreen title="Welcome Back Neha Kumari..">
+        <MainScreen title={`Welcome Back ${userInfo.name}...` }>
             <Link to="createnote">
                 <Button style={{ marginLeft: 10, marginBottom: 6 }} size="lg">
                     Create New Note
@@ -72,7 +80,10 @@ const MyNotes = () => {
                                     {note.content} 
                                 </p>
                                 <footer className="blockquote-footer">
-                                    created on - date
+                                    created on {" "}
+                                    <cite title='Source Title'>
+                                        {note.createdAt.substring(0,10)}
+                                    </cite>
                                 </footer>
                             </blockquote>
                         </Card.Body>

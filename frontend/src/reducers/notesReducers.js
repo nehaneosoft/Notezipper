@@ -2,10 +2,10 @@ import {
     // NOTES_UPDATE_REQUEST,
     // NOTES_UPDATE_SUCCESS,
     // NOTES_UPDATE_FAIL,
-    // NOTES_CREATE_FAIL,
-    // NOTES_CREATE_REQUEST,
-    // NOTES_CREATE_SUCCESS,
-    // NOTES_DELETE_FAIL,
+     NOTES_CREATE_FAIL,
+     NOTES_CREATE_REQUEST,
+     NOTES_CREATE_SUCCESS,
+     // NOTES_DELETE_FAIL,
     // NOTES_DELETE_REQUEST,
     // NOTES_DELETE_SUCCESS,
     NOTES_LIST_FAIL,
@@ -21,6 +21,20 @@ export const noteListReducer = (state = { notes: [] }, action) => {
       case NOTES_LIST_SUCCESS:
         return { loading: false, notes: action.payload };
       case NOTES_LIST_FAIL:
+        return { loading: false, error: action.payload };
+  
+      default:
+        return state;
+    }
+  };
+
+  export const noteCreateReducer = (state = {}, action) => {
+    switch (action.type) {
+      case NOTES_CREATE_REQUEST:
+        return { loading: true };
+      case NOTES_CREATE_SUCCESS:
+        return { loading: false, success: true };
+      case NOTES_CREATE_FAIL:
         return { loading: false, error: action.payload };
   
       default:
