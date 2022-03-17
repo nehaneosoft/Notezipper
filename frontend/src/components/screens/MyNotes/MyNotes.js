@@ -17,6 +17,13 @@ const MyNotes = () => {
 
     const userLogin = useSelector((state) => state.userLogin);
     const {userInfo } = userLogin;
+    console.log(userInfo);
+
+    const noteCreate = useSelector((state) => state.noteCreate);
+    const { success: successCreate } = noteCreate;
+
+    const noteUpdate = useSelector((state) => state.noteUpdate);
+  const { success:successUpdate } = noteUpdate;
 
     
     const deleteHandler = (id) => {
@@ -33,7 +40,7 @@ const MyNotes = () => {
             history.push("/")
         }
 
-    },[dispatch])
+    },[dispatch,successCreate,history,userInfo,successUpdate])
 
     return (
         <MainScreen title={`Welcome Back ${userInfo.name}...` }>
@@ -45,7 +52,7 @@ const MyNotes = () => {
             
                {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
                {loading && <Loading />}
-               { notes?.map(note => (
+               { notes?.reverse().map(note => (
                     <Accordion className='accordian-flush' key={note._id}>
                     <Card style={{ margin: 10 }}>
                         <Card.Header style={{ display: "flex" }}>
